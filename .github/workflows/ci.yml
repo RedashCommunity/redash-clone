@@ -157,6 +157,7 @@ jobs:
       - name: Setup Redash Server
         run: |
           set -x
+          echo $PERCY_TOKEN
           yarn cypress build
           yarn cypress start -- --skip-db-seed
           docker compose run cypress yarn cypress db-seed
