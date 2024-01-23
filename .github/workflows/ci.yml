@@ -12,9 +12,13 @@ jobs:
   backend-lint:
     runs-on: ubuntu-22.04
     steps:
+      - if: github.event.pull_request.mergeable != 'true'
+        name: Exit if PR is not mergeable
+        run: exit 1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
       - uses: actions/setup-python@v4
         with:
           python-version: '3.8'
@@ -31,9 +35,13 @@ jobs:
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
     steps:
+      - if: github.event.pull_request.mergeable != 'true'
+        name: Exit if PR is not mergeable
+        run: exit 1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
       - name: Build Docker Images
         run: |
           set -x
@@ -67,9 +75,13 @@ jobs:
   frontend-lint:
     runs-on: ubuntu-22.04
     steps:
+      - if: github.event.pull_request.mergeable != 'true'
+        name: Exit if PR is not mergeable
+        run: exit 1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -90,9 +102,13 @@ jobs:
     runs-on: ubuntu-22.04
     needs: frontend-lint
     steps:
+      - if: github.event.pull_request.mergeable != 'true'
+        name: Exit if PR is not mergeable
+        run: exit 1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -116,9 +132,13 @@ jobs:
       CYPRESS_INSTALL_BINARY: 0
       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 1
     steps:
+      - if: github.event.pull_request.mergeable != 'true'
+        name: Exit if PR is not mergeable
+        run: exit 1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -182,9 +202,13 @@ jobs:
       - build-skip-check
     if: needs.build-skip-check.outputs.skip == 'false'
     steps:
+      - if: github.event.pull_request.mergeable != 'true'
+        name: Exit if PR is not mergeable
+        run: exit 1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
