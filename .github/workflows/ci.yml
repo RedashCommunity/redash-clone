@@ -12,7 +12,7 @@ jobs:
   backend-lint:
     runs-on: ubuntu-22.04
     steps:
-      - if: github.event.pull_request.mergeable != 'true'
+      - if: github.event.pull_request.mergeable == 'false'
         name: Exit if PR is not mergeable
         run: exit 1
       - uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
     steps:
-      - if: github.event.pull_request.mergeable != 'true'
+      - if: github.event.pull_request.mergeable == 'false'
         name: Exit if PR is not mergeable
         run: exit 1
       - uses: actions/checkout@v3
@@ -75,7 +75,7 @@ jobs:
   frontend-lint:
     runs-on: ubuntu-22.04
     steps:
-      - if: github.event.pull_request.mergeable != 'true'
+      - if: github.event.pull_request.mergeable == 'false'
         name: Exit if PR is not mergeable
         run: exit 1
       - uses: actions/checkout@v3
@@ -102,7 +102,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: frontend-lint
     steps:
-      - if: github.event.pull_request.mergeable != 'true'
+      - if: github.event.pull_request.mergeable == 'false'
         name: Exit if PR is not mergeable
         run: exit 1
       - uses: actions/checkout@v3
@@ -132,7 +132,7 @@ jobs:
       CYPRESS_INSTALL_BINARY: 0
       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 1
     steps:
-      - if: github.event.pull_request.mergeable != 'true'
+      - if: github.event.pull_request.mergeable == 'false'
         name: Exit if PR is not mergeable
         run: exit 1
       - uses: actions/checkout@v3
@@ -202,7 +202,7 @@ jobs:
       - build-skip-check
     if: needs.build-skip-check.outputs.skip == 'false'
     steps:
-      - if: github.event.pull_request.mergeable != 'true'
+      - if: github.event.pull_request.mergeable == 'false'
         name: Exit if PR is not mergeable
         run: exit 1
       - uses: actions/checkout@v3
