@@ -59,9 +59,6 @@ function stopServer() {
 
 function runCypressCI() {
   const {
-    PERCY_TOKEN_ENCODED,
-    CYPRESS_PROJECT_ID_ENCODED,
-    CYPRESS_RECORD_KEY_ENCODED,
     GITHUB_REPOSITORY,
     CYPRESS_OPTIONS, // eslint-disable-line no-unused-vars
   } = process.env;
